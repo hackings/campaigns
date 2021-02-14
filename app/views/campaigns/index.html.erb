@@ -1,0 +1,43 @@
+<%- model_class = Campaign -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:purpose) %></th>
+      <th><%= model_class.human_attribute_name(:estimated_duration) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <td><%= campaign.title %></td>
+        <td><%= campaign.purpose %></td>
+        <td><%= campaign.estimated_duration %></td>
+        <td><%=l campaign.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_campaign_path(campaign), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      campaign_path(campaign),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+          <%= link_to t('.edit', :default => t("discussion")),
+                      campaign_discussions_path(campaign), :class => 'btn btn-default btn-xs' %>                      
+          <%= link_to t('.edit', :default => t("comment")),
+                      campaign_comments_path(campaign), :class => 'btn btn-default btn-xs' %>                      
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_campaign_path,
+            :class => 'btn btn-primary' %>
